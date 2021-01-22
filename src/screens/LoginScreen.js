@@ -9,8 +9,6 @@ import {
 } from "react-native";
 
 
-import { LogBox } from "react-native"
-
 import Axios from "axios";
 import AsyncStorage from "@react-native-community/async-storage";
 
@@ -40,6 +38,7 @@ const LoginScreen = ({ navigation }) => {
         setUsernameErr("");
         setPasswordErr("");
         setToken(response.data.access_token);
+        LogBox.ignoreAllLogs(true)
         console.log(token);
         {
           response &&
