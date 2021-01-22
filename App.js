@@ -1,6 +1,6 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { LogBox } from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -10,6 +10,7 @@ import LoginScreen from "./src/screens/LoginScreen";
 const AppNavigator = createStackNavigator();
 
 export default function App() {
+  LogBox.ignoreAllLogs()
   return (
     <NavigationContainer>
       <AppNavigator.Navigator>
@@ -27,12 +28,3 @@ export default function App() {
     </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
