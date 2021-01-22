@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ScrollView,
   TextInput,
@@ -6,8 +6,8 @@ import {
   View,
   Text,
   Button,
+  Alert,
 } from "react-native";
-
 
 import Axios from "axios";
 import AsyncStorage from "@react-native-community/async-storage";
@@ -16,9 +16,7 @@ const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
-  const [userNameErr, setUsernameErr] = useState("");
-  const [passwordErr, setPasswordErr] = useState("");
-  const [authErr, setAuthErr] = useState("");
+  
 
   const handleLogin = async () => {
     const data = new FormData();
@@ -30,17 +28,19 @@ const LoginScreen = ({ navigation }) => {
           Accept: "application/json",
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          username: username,
-          password: password,
-        }),
       }).then((response) => {
-        setUsernameErr("");
-        setPasswordErr("");
+        if (response.data.error) {
+          alert("Unauthorized");
+        } else {
+          alert("Welcome back " + username);
+          setUsername("");
+          setPassword("");
+        }
         setToken(response.data.access_token);
-        LogBox.ignoreAllLogs(true)
+        LogBox.ignoreAllLogs(true);
         console.log(token);
-        {
+
+        if (token) {
           response &&
             response.data &&
             response.data.access_token &&
@@ -48,16 +48,32 @@ const LoginScreen = ({ navigation }) => {
         }
       });
     } catch (error) {
+      if (
+        error.response.data.error.username &&
+        error.response.data.error.password
+      ) {
+        alert(
+          error.response.data.error.username +
+          " And " + error.response.data.error.password
+        );
+      } else if (error.response.data.error.username) {
+        alert(error.response.data.error.username);
+      } else if (error.response.data.error.password) {
+        alert(error.response.data.error.password);
+      }
+
       console.log(error);
     }
   };
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <Text>Username :</Text>
       <TextInput
         style={styles.input}
         onChangeText={(username) => setUsername(username)}
         value={username}
       />
+      <Text>Password :</Text>
       <TextInput
         style={styles.input}
         onChangeText={(password) => setPassword(password)}
@@ -66,7 +82,6 @@ const LoginScreen = ({ navigation }) => {
       />
       <Button title="LogIn" onPress={handleLogin} />
       {token ? navigation.navigate("Home") : navigation.navigate("Login")}
-      
     </ScrollView>
   );
 };
