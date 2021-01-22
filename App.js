@@ -10,19 +10,19 @@ import LoginScreen from "./src/screens/LoginScreen";
 const AppNavigator = createStackNavigator();
 
 export default function App() {
-  LogBox.ignoreAllLogs()
+  LogBox.ignoreAllLogs();
   return (
     <NavigationContainer>
-      <AppNavigator.Navigator>
+      <AppNavigator.Navigator initialRouteName="Login">
         <AppNavigator.Screen
           name="Login"
           component={LoginScreen}
-          options={{ title: "Login" }}
+          options={{ title: "Login" ,headerLeft: false  }}
         />
         <AppNavigator.Screen
           name="Home"
           component={HomeScreen}
-          options={{ title: "welcome" }}
+          options={{ title: "Admin", headerLeft: false }}
         />
       </AppNavigator.Navigator>
     </NavigationContainer>
