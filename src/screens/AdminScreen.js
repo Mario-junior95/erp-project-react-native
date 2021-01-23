@@ -1,13 +1,21 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import React from "react";
-import { View, Text, Button, Alert } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  Button,
+  Alert,
+  TouchableOpacity,
+  StyleSheet,
+} from "react-native";
 
-const HomeScreen = ({ navigation }) => {
+const AdminScreen = ({ navigation }) => {
   return (
-    <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <View style={styles.container}>
       <Text>Admin Screen</Text>
-      <Button
-        title="Log Out"
+      <TouchableOpacity
+        style={styles.buttonStyle}
+        activeOpacity={0.5}
         onPress={() => {
           Alert.alert(
             "Logout",
@@ -32,9 +40,30 @@ const HomeScreen = ({ navigation }) => {
             { cancelable: false }
           );
         }}
-      />
+      >
+        <Text style={styles.buttonTextStyle}>Login</Text>
+      </TouchableOpacity>
     </View>
   );
 };
 
-export default HomeScreen;
+export default AdminScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonStyle: {
+    backgroundColor: "#fee715ff",
+    width:100
+  },
+  buttonTextStyle: {
+    position: "relative",
+    left: 20,
+    padding: 8,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+});
