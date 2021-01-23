@@ -1,15 +1,19 @@
 import "react-native-gesture-handler";
 import React from "react";
-import { LogBox } from "react-native";
+import { LogBox  , Button} from "react-native";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import AdminScreen from "./src/screens/AdminScreen";
 import LoginScreen from "./src/screens/LoginScreen";
 
+
+
+
 const AppNavigator = createStackNavigator();
 
 export default function App() {
+ 
   LogBox.ignoreAllLogs();
   return (
     <NavigationContainer>
@@ -25,6 +29,7 @@ export default function App() {
           options={{ title: "Admin", headerLeft: false }}
         />
       </AppNavigator.Navigator>
+      {/* <Button title = "test" onPress ={test}/> */}
     </NavigationContainer>
   );
 }

@@ -42,8 +42,9 @@ const LoginScreen = ({ navigation }) => {
     try {
       await Axios.post("http://192.168.0.107:8000/api/login", data, {
         headers: {
-          " Accept": "application/json",
-          "Content-Type": "application/json",
+          // " Accept": "application/json",
+          "content-type": "multipart/form-data",
+          Authorization: "Bearer " + AsyncStorage.getItem("token"),
         },
       }).then((response) => {
         if (response.data.error) {
@@ -59,7 +60,10 @@ const LoginScreen = ({ navigation }) => {
 
           setToken(response.data.access_token);
           // LogBox.ignoreAllLogs(true);
-          console.log(token);
+          // console.log(
+          //   AsyncStorage.setItem("token", response.data.access_token)
+          // );
+          console.log(response);
         }
       });
     } catch (error) {
