@@ -21,6 +21,19 @@ const LoginScreen = ({ navigation }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [token, setToken] = useState("");
+  const [navigate, setNavigate] = useState("");
+  const [handleErr, setHandleErr] = useState({});
+
+  //Check this link below to learn the difference between useEffect and useLayoutEffect
+  //https://kentcdodds.com/blog/useeffect-vs-uselayouteffect
+
+  React.useLayoutEffect(() => {
+    {
+      token
+        ? setNavigate(navigation.navigate("Admin"))
+        : setNavigate(navigation.navigate("Login"));
+    }
+  }, [token, navigation]);
 
   const handleLogin = async () => {
     const data = new FormData();
@@ -45,27 +58,31 @@ const LoginScreen = ({ navigation }) => {
             AsyncStorage.setItem("token", response.data.access_token);
 
           setToken(response.data.access_token);
-          LogBox.ignoreAllLogs(true);
+          // LogBox.ignoreAllLogs(true);
           console.log(token);
         }
       });
     } catch (error) {
-      if (
-        error.response.data.error.username &&
-        error.response.data.error.password
-      ) {
-        alert(
-          error.response.data.error.username +
-            " And " +
-            error.response.data.error.password
-        );
-      } else if (error.response.data.error.username) {
-        alert(error.response.data.error.username);
-      } else if (error.response.data.error.password) {
-        alert(error.response.data.error.password);
+      if (error.response) {
+        if (
+          error.response.data.error.username &&
+          error.response.data.error.password
+        ) {
+          alert(
+            error.response.data.error.username +
+              " And " +
+              error.response.data.error.password
+          );
+        } else if (error.response.data.error.username) {
+          alert(error.response.data.error.username);
+        } else if (error.response.data.error.password) {
+          alert(error.response.data.error.password);
+        }
+      } else if (error.request) {
+        console.log("request error");
+      } else {
+        console.log(error);
       }
-
-      console.log(error);
     }
   };
   return (
@@ -110,7 +127,6 @@ const LoginScreen = ({ navigation }) => {
             <Text style={styles.buttonTextStyle}>Login</Text>
           </TouchableOpacity>
         </View>
-        {token ? navigation.navigate("Admin") : navigation.navigate("Login")}
       </ImageBackground>
     </ScrollView>
   );

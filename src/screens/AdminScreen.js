@@ -1,13 +1,6 @@
 import AsyncStorage from "@react-native-community/async-storage";
-import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  Alert,
-  TouchableOpacity,
-  StyleSheet,
-} from "react-native";
+import React from "react";
+import { View, Text, Alert, TouchableOpacity, StyleSheet } from "react-native";
 
 const AdminScreen = ({ navigation }) => {
   return (
@@ -41,7 +34,7 @@ const AdminScreen = ({ navigation }) => {
           );
         }}
       >
-        <Text style={styles.buttonTextStyle}>Login</Text>
+        <Text style={styles.buttonTextStyle}>LogOut</Text>
       </TouchableOpacity>
     </View>
   );
@@ -57,11 +50,11 @@ const styles = StyleSheet.create({
   },
   buttonStyle: {
     backgroundColor: "#fee715ff",
-    width:100
+    width: 100,
   },
   buttonTextStyle: {
     position: "relative",
-    left: 20,
+    left: 12,
     padding: 8,
     fontSize: 18,
     fontWeight: "bold",
