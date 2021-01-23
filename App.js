@@ -9,11 +9,8 @@ import LoginScreen from "./src/screens/LoginScreen";
 
 const AppNavigator = createStackNavigator();
 
-
-
 export default function App() {
-  
-LogBox.ignoreAllLogs();
+  LogBox.ignoreAllLogs();
   return (
     <NavigationContainer>
       <AppNavigator.Navigator initialRouteName="Login">
